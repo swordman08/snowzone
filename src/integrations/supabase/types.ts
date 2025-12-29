@@ -14,7 +14,80 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      report_photos: {
+        Row: {
+          created_at: string
+          id: string
+          photo_url: string
+          report_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          photo_url: string
+          report_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          photo_url?: string
+          report_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_photos_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "snow_reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      snow_reports: {
+        Row: {
+          comment: string
+          created_at: string
+          crowd_level: number
+          grooming: number
+          id: string
+          mountain_id: string
+          overall_rating: number
+          reporter_name: string | null
+          snow_amount: number
+          snow_weight: number
+          visibility: number
+          wind_conditions: number
+        }
+        Insert: {
+          comment: string
+          created_at?: string
+          crowd_level: number
+          grooming: number
+          id?: string
+          mountain_id: string
+          overall_rating: number
+          reporter_name?: string | null
+          snow_amount: number
+          snow_weight: number
+          visibility: number
+          wind_conditions: number
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          crowd_level?: number
+          grooming?: number
+          id?: string
+          mountain_id?: string
+          overall_rating?: number
+          reporter_name?: string | null
+          snow_amount?: number
+          snow_weight?: number
+          visibility?: number
+          wind_conditions?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
