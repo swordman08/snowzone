@@ -12,6 +12,7 @@ import { PhotoUpload } from '@/components/PhotoUpload';
 import { mountains } from '@/data/mockData';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import {
   Select,
   SelectContent,
@@ -23,6 +24,7 @@ import {
 const SubmitReport = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const [selectedMountain, setSelectedMountain] = useState('');
   const [overallRating, setOverallRating] = useState(7);
@@ -75,6 +77,7 @@ const SubmitReport = () => {
           wind_conditions: windConditions,
           comment: comment,
           reporter_name: reporterName || null,
+          user_id: user?.id || null,
         })
         .select()
         .single();

@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       report_photos: {
         Row: {
           created_at: string
@@ -55,6 +85,7 @@ export type Database = {
           reporter_name: string | null
           snow_amount: number
           snow_weight: number
+          user_id: string | null
           visibility: number
           wind_conditions: number
         }
@@ -69,6 +100,7 @@ export type Database = {
           reporter_name?: string | null
           snow_amount: number
           snow_weight: number
+          user_id?: string | null
           visibility: number
           wind_conditions: number
         }
@@ -83,6 +115,7 @@ export type Database = {
           reporter_name?: string | null
           snow_amount?: number
           snow_weight?: number
+          user_id?: string | null
           visibility?: number
           wind_conditions?: number
         }
