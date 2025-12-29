@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Send, Mountain } from 'lucide-react';
+import { Send, Mountain, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Navbar } from '@/components/Navbar';
 import { Snowfall } from '@/components/Snowfall';
 import { ConditionSlider } from '@/components/ConditionSlider';
 import { RatingStars } from '@/components/RatingStars';
+import { PhotoUpload } from '@/components/PhotoUpload';
 import { mountains } from '@/data/mockData';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Select,
   SelectContent,
@@ -30,8 +33,11 @@ const SubmitReport = () => {
   const [crowdLevel, setCrowdLevel] = useState(5);
   const [windConditions, setWindConditions] = useState(5);
   const [comment, setComment] = useState('');
+  const [reporterName, setReporterName] = useState('');
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedMountain) {
@@ -52,13 +58,73 @@ const SubmitReport = () => {
       return;
     }
 
-    // In a real app, this would submit to a backend
-    toast({
-      title: 'Report Submitted!',
-      description: 'Thank you for sharing the snow conditions.',
-    });
+    setIsSubmitting(true);
 
-    navigate(`/mountains/${selectedMountain}`);
+    try {
+      // Insert the report
+      const { data: report, error: reportError } = await supabase
+        .from('snow_reports')
+        .insert({
+          mountain_id: selectedMountain,
+          overall_rating: overallRating,
+          snow_amount: snowAmount,
+          snow_weight: snowWeight,
+          grooming: grooming,
+          visibility: visibility,
+          crowd_level: crowdLevel,
+          wind_conditions: windConditions,
+          comment: comment,
+          reporter_name: reporterName || null,
+        })
+        .select()
+        .single();
+
+      if (reportError) throw reportError;
+
+      // Upload photos if any
+      if (photos.length > 0 && report) {
+        for (const photo of photos) {
+          const fileExt = photo.name.split('.').pop();
+          const fileName = `${report.id}/${crypto.randomUUID()}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('report-photos')
+            .upload(fileName, photo);
+
+          if (uploadError) {
+            console.error('Photo upload error:', uploadError);
+            continue;
+          }
+
+          const { data: { publicUrl } } = supabase.storage
+            .from('report-photos')
+            .getPublicUrl(fileName);
+
+          await supabase
+            .from('report_photos')
+            .insert({
+              report_id: report.id,
+              photo_url: publicUrl,
+            });
+        }
+      }
+
+      toast({
+        title: 'Report Submitted!',
+        description: 'Thank you for sharing the snow conditions.',
+      });
+
+      navigate(`/mountains/${selectedMountain}`);
+    } catch (error) {
+      console.error('Submit error:', error);
+      toast({
+        title: 'Submission Failed',
+        description: 'There was an error submitting your report. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -179,6 +245,14 @@ const SubmitReport = () => {
               />
             </div>
 
+            {/* Photos */}
+            <div className="glass-card rounded-xl p-6">
+              <label className="text-sm font-medium text-foreground mb-3 block">
+                Photos (Optional)
+              </label>
+              <PhotoUpload photos={photos} onPhotosChange={setPhotos} maxPhotos={5} />
+            </div>
+
             {/* Comment */}
             <div className="glass-card rounded-xl p-6">
               <label className="text-sm font-medium text-foreground mb-3 block">
@@ -196,10 +270,37 @@ const SubmitReport = () => {
               </p>
             </div>
 
+            {/* Reporter Name */}
+            <div className="glass-card rounded-xl p-6">
+              <label className="text-sm font-medium text-foreground mb-3 block">
+                Your Name (Optional)
+              </label>
+              <Input
+                placeholder="Anonymous"
+                value={reporterName}
+                onChange={(e) => setReporterName(e.target.value)}
+              />
+            </div>
+
             {/* Submit Button */}
-            <Button type="submit" variant="ice" size="xl" className="w-full">
-              <Send className="h-5 w-5" />
-              Submit Report
+            <Button 
+              type="submit" 
+              variant="ice" 
+              size="xl" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="h-5 w-5" />
+                  Submit Report
+                </>
+              )}
             </Button>
           </form>
         </div>
