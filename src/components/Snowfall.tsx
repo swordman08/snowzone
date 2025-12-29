@@ -29,7 +29,7 @@ export const Snowfall = () => {
       {snowflakes.map((flake) => (
         <div
           key={flake.id}
-          className="absolute rounded-full bg-snow-white animate-snowfall"
+          className="absolute rounded-full bg-ice-cyan animate-snowfall"
           style={{
             left: `${flake.left}%`,
             width: `${flake.size}px`,
@@ -37,6 +37,7 @@ export const Snowfall = () => {
             opacity: flake.opacity,
             animationDuration: `${flake.duration}s`,
             animationDelay: `${flake.delay}s`,
+            boxShadow: `0 0 ${flake.size * 2}px hsl(var(--ice-cyan) / 0.6)`,
           }}
         />
       ))}
