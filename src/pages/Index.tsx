@@ -7,12 +7,9 @@ import { MountainCard } from '@/components/MountainCard';
 import { LeaderboardTable } from '@/components/LeaderboardTable';
 import { mountains, leaderboardData, recentReports } from '@/data/mockData';
 import { RatingStars } from '@/components/RatingStars';
-
 const Index = () => {
-  const trendingMountains = mountains.filter((m) => m.trending).slice(0, 3);
-
-  return (
-    <div className="min-h-screen bg-background">
+  const trendingMountains = mountains.filter(m => m.trending).slice(0, 3);
+  return <div className="min-h-screen bg-background">
       <Snowfall />
       <Navbar />
 
@@ -23,21 +20,27 @@ const Index = () => {
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm text-primary-foreground px-4 py-2 rounded-full mb-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 backdrop-blur-sm text-primary-foreground px-4 py-2 rounded-full mb-6 animate-fade-in bg-accent">
               <Snowflake className="h-4 w-4" />
               <span className="text-sm font-medium">Real-time snow conditions</span>
             </div>
 
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-fade-in" style={{
+            animationDelay: '100ms'
+          }}>
               Track Snow Conditions
               <span className="block text-ice-cyan">Like Never Before</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto animate-fade-in" style={{
+            animationDelay: '200ms'
+          }}>
               Join thousands of skiers and snowboarders sharing real-time snow reports from mountains worldwide. Find the perfect powder day.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '300ms' }}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{
+            animationDelay: '300ms'
+          }}>
               <Link to="/mountains">
                 <Button variant="hero" size="xl" className="w-full sm:w-auto">
                   <Mountain className="h-5 w-5" />
@@ -52,7 +55,9 @@ const Index = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: '400ms' }}>
+            <div className="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto animate-fade-in" style={{
+            animationDelay: '400ms'
+          }}>
               <div className="text-center">
                 <div className="text-2xl md:text-3xl font-bold text-primary-foreground">150+</div>
                 <div className="text-sm text-primary-foreground/70">Mountains</div>
@@ -90,11 +95,11 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trendingMountains.map((mountain, index) => (
-              <div key={mountain.id} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+            {trendingMountains.map((mountain, index) => <div key={mountain.id} className="animate-fade-in" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <MountainCard {...mountain} />
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -135,12 +140,9 @@ const Index = () => {
           </div>
 
           <div className="grid gap-6">
-            {recentReports.map((report, index) => (
-              <div
-                key={report.id}
-                className="glass-card rounded-xl p-6 animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {recentReports.map((report, index) => <div key={report.id} className="glass-card rounded-xl p-6 animate-fade-in" style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <div className="flex flex-col md:flex-row md:items-start gap-4">
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -178,8 +180,7 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -220,8 +221,6 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
