@@ -20,21 +20,21 @@ const Index = () => {
         
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 backdrop-blur-sm bg-snow-white/20 text-snow-white px-4 py-2 rounded-full mb-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 backdrop-blur-sm bg-primary/10 text-primary px-4 py-2 rounded-full mb-6 animate-fade-in">
               <Snowflake className="h-4 w-4" />
               <span className="text-sm font-medium">Real-time snow conditions</span>
             </div>
 
             <h1 style={{
             animationDelay: '100ms'
-          }} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in text-snow-white">
+          }} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in text-foreground">
               Track Snow Conditions
-              <span className="block text-ice-cyan">Like Never Before</span>
+              <span className="block text-primary">Like Never Before</span>
             </h1>
 
             <p style={{
             animationDelay: '200ms'
-          }} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in text-snow-light">
+          }} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in text-muted-foreground">
               Join thousands of skiers and snowboarders sharing real-time snow reports from mountains worldwide. Find the perfect powder day.
             </p>
 
@@ -59,16 +59,16 @@ const Index = () => {
             animationDelay: '400ms'
           }}>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-snow-white">150+</div>
-                <div className="text-sm text-snow-light/70">Mountains</div>
+                <div className="text-2xl md:text-3xl font-bold text-foreground">150+</div>
+                <div className="text-sm text-muted-foreground">Mountains</div>
               </div>
-              <div className="text-center border-x border-snow-white/20">
-                <div className="text-2xl md:text-3xl font-bold text-snow-white">12K+</div>
-                <div className="text-sm text-snow-light/70">Reports</div>
+              <div className="text-center border-x border-border">
+                <div className="text-2xl md:text-3xl font-bold text-foreground">12K+</div>
+                <div className="text-sm text-muted-foreground">Reports</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-snow-white">150+</div>
-                <div className="text-sm text-snow-light/70">Users</div>
+                <div className="text-2xl md:text-3xl font-bold text-foreground">5K+</div>
+                <div className="text-sm text-muted-foreground">Users</div>
               </div>
             </div>
           </div>
