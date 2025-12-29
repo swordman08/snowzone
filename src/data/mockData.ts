@@ -9,7 +9,6 @@ export const mountains = [
     lastUpdated: '2h ago',
     elevation: '11,212 ft',
     trending: true,
-    coordinates: { lat: 39.1875, lng: -106.8186 },
   },
   {
     id: 'vail-mountain',
@@ -21,7 +20,6 @@ export const mountains = [
     lastUpdated: '1h ago',
     elevation: '11,570 ft',
     trending: true,
-    coordinates: { lat: 39.6403, lng: -106.3742 },
   },
   {
     id: 'park-city',
@@ -32,7 +30,6 @@ export const mountains = [
     snowDepth: '38"',
     lastUpdated: '4h ago',
     elevation: '10,026 ft',
-    coordinates: { lat: 40.6514, lng: -111.5080 },
   },
   {
     id: 'mammoth-mountain',
@@ -43,7 +40,6 @@ export const mountains = [
     snowDepth: '48"',
     lastUpdated: '3h ago',
     elevation: '11,053 ft',
-    coordinates: { lat: 37.6308, lng: -119.0326 },
   },
   {
     id: 'jackson-hole',
@@ -55,7 +51,6 @@ export const mountains = [
     lastUpdated: '30m ago',
     elevation: '10,450 ft',
     trending: true,
-    coordinates: { lat: 43.5875, lng: -110.8279 },
   },
   {
     id: 'whistler-blackcomb',
@@ -66,7 +61,6 @@ export const mountains = [
     snowDepth: '58"',
     lastUpdated: '1h ago',
     elevation: '7,494 ft',
-    coordinates: { lat: 50.1163, lng: -122.9574 },
   },
 ];
 

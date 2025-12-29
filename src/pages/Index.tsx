@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Mountain, Snowflake, TrendingUp, ChevronRight, Users, MapPin, Map } from 'lucide-react';
+import { Mountain, Snowflake, TrendingUp, ChevronRight, Users, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Navbar';
 import { Snowfall } from '@/components/Snowfall';
 import { MountainCard } from '@/components/MountainCard';
 import { LeaderboardTable } from '@/components/LeaderboardTable';
-import MountainMap from '@/components/MountainMap';
 import { mountains, leaderboardData, recentReports } from '@/data/mockData';
 import { RatingStars } from '@/components/RatingStars';
 const Index = () => {
@@ -102,22 +101,6 @@ const Index = () => {
                 <MountainCard {...mountain} />
               </div>)}
           </div>
-        </div>
-      </section>
-
-      {/* Mountain Map */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2">
-                <Map className="h-6 w-6 text-primary" />
-                Explore the Map
-              </h2>
-              <p className="text-muted-foreground mt-1">Click on any mountain to view details</p>
-            </div>
-          </div>
-          <MountainMap />
         </div>
       </section>
 
