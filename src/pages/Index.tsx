@@ -32,9 +32,9 @@ const Index = () => {
               <span className="block text-ice-cyan">Like Never Before</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto animate-fade-in" style={{
+            <p style={{
             animationDelay: '200ms'
-          }}>
+          }} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in text-accent">
               Join thousands of skiers and snowboarders sharing real-time snow reports from mountains worldwide. Find the perfect powder day.
             </p>
 
@@ -58,7 +58,7 @@ const Index = () => {
             <div className="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto animate-fade-in" style={{
             animationDelay: '400ms'
           }}>
-              <div className="text-center">
+              <div className="text-center text-slate-950">
                 <div className="text-2xl md:text-3xl font-bold text-primary-foreground">150+</div>
                 <div className="text-sm text-primary-foreground/70">Mountains</div>
               </div>
