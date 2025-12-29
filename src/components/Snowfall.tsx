@@ -29,17 +29,18 @@ export const Snowfall = () => {
       {snowflakes.map((flake) => (
         <div
           key={flake.id}
-          className="absolute rounded-full bg-ice-cyan animate-snowfall"
+          className="absolute text-ice-cyan animate-snowfall select-none"
           style={{
             left: `${flake.left}%`,
-            width: `${flake.size}px`,
-            height: `${flake.size}px`,
+            fontSize: `${flake.size * 3}px`,
             opacity: flake.opacity,
             animationDuration: `${flake.duration}s`,
             animationDelay: `${flake.delay}s`,
-            boxShadow: `0 0 ${flake.size * 2}px hsl(var(--ice-cyan) / 0.6)`,
+            textShadow: `0 0 ${flake.size * 2}px hsl(var(--ice-cyan) / 0.6)`,
           }}
-        />
+        >
+          {['❄', '❅', '❆'][flake.id % 3]}
+        </div>
       ))}
     </div>
   );
