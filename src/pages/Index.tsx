@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mountain, Snowflake, TrendingUp, ChevronRight, Users, MapPin } from 'lucide-react';
+import { Mountain, Snowflake, TrendingUp, ChevronRight, Users, MapPin, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Navbar';
 import { Snowfall } from '@/components/Snowfall';
@@ -215,6 +215,14 @@ const Index = () => {
                 Snow<span className="text-primary">Zone</span>
               </span>
             </div>
+            <a 
+              href="https://swordman08.github.io/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Built by <Github className="h-4 w-4" /> swordman08
+            </a>
             <p className="text-sm text-muted-foreground">
               © 2025 SnowZone. Track conditions. Find powder.
             </p>
