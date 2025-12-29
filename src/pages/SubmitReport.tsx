@@ -84,8 +84,8 @@ const SubmitReport = () => {
 
       if (reportError) throw reportError;
 
-      // Upload photos if any
-      if (photos.length > 0 && report) {
+      // Upload photos if any (requires authentication)
+      if (photos.length > 0 && report && user) {
         for (const photo of photos) {
           const fileExt = photo.name.split('.').pop();
           const fileName = `${report.id}/${crypto.randomUUID()}.${fileExt}`;
@@ -102,6 +102,23 @@ const SubmitReport = () => {
           const { data: { publicUrl } } = supabase.storage
             .from('report-photos')
             .getPublicUrl(fileName);
+
+          // Validate URL format before inserting (defense in depth)
+          const isValidStorageUrl = (url: string): boolean => {
+            try {
+              const parsed = new URL(url);
+              return parsed.protocol === 'https:' && 
+                     parsed.hostname.endsWith('.supabase.co') &&
+                     parsed.pathname.startsWith('/storage/v1/object/public/report-photos/');
+            } catch {
+              return false;
+            }
+          };
+
+          if (!isValidStorageUrl(publicUrl)) {
+            console.error('Invalid storage URL format');
+            continue;
+          }
 
           await supabase
             .from('report_photos')
