@@ -1,126 +1,109 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { mountains } from '@/data/mockData';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { MapPin } from 'lucide-react';
+import { Mountain } from 'lucide-react';
 
-interface MountainMapProps {
-  accessToken?: string;
-}
-
-const MountainMap: React.FC<MountainMapProps> = ({ accessToken }) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
+const MountainMap: React.FC = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(accessToken || '');
-  const [isMapReady, setIsMapReady] = useState(false);
-  const [inputToken, setInputToken] = useState('');
 
-  useEffect(() => {
-    if (!mapContainer.current || !token) return;
-
-    mapboxgl.accessToken = token;
-
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/outdoors-v12',
-      center: [-110, 42],
-      zoom: 4,
-      pitch: 30,
-    });
-
-    map.current.addControl(
-      new mapboxgl.NavigationControl({
-        visualizePitch: true,
-      }),
-      'top-right'
-    );
-
-    map.current.on('load', () => {
-      setIsMapReady(true);
-
-      // Add markers for each mountain
-      mountains.forEach((mountain) => {
-        if (!mountain.coordinates || !map.current) return;
-
-        // Create custom marker element
-        const markerEl = document.createElement('div');
-        markerEl.className = 'mountain-marker';
-        markerEl.innerHTML = `
-          <div class="flex flex-col items-center cursor-pointer group">
-            <div class="bg-primary text-primary-foreground px-2 py-1 rounded-lg text-xs font-medium shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap mb-1">
-              ${mountain.name}
-            </div>
-            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg border-2 border-white transform transition-transform group-hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-foreground">
-                <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
-              </svg>
-            </div>
-          </div>
-        `;
-
-        markerEl.addEventListener('click', () => {
-          navigate(`/mountains/${mountain.id}`);
-        });
-
-        new mapboxgl.Marker({ element: markerEl, anchor: 'bottom' })
-          .setLngLat([mountain.coordinates.lng, mountain.coordinates.lat])
-          .addTo(map.current!);
-      });
-    });
-
-    return () => {
-      map.current?.remove();
-    };
-  }, [token, navigate]);
-
-  const handleTokenSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setToken(inputToken);
+  // Convert lat/lng to approximate x/y positions on the map
+  // Map bounds: roughly lat 25-60, lng -130 to -60
+  const getPosition = (lat: number, lng: number) => {
+    const minLat = 25;
+    const maxLat = 60;
+    const minLng = -130;
+    const maxLng = -60;
+    
+    const x = ((lng - minLng) / (maxLng - minLng)) * 100;
+    const y = ((maxLat - lat) / (maxLat - minLat)) * 100;
+    
+    return { x: `${x}%`, y: `${y}%` };
   };
 
-  if (!token) {
-    return (
-      <div className="w-full h-[500px] rounded-xl bg-card border border-border flex flex-col items-center justify-center p-8">
-        <MapPin className="w-12 h-12 text-muted-foreground mb-4" />
-        <h3 className="text-lg font-semibold mb-2">Mapbox Token Required</h3>
-        <p className="text-muted-foreground text-sm text-center mb-4 max-w-md">
-          To display the interactive map, please enter your Mapbox public token. 
-          You can get one for free at{' '}
-          <a 
-            href="https://mapbox.com/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            mapbox.com
-          </a>
-        </p>
-        <form onSubmit={handleTokenSubmit} className="w-full max-w-md flex gap-2">
-          <Input
-            type="text"
-            placeholder="pk.eyJ1..."
-            value={inputToken}
-            onChange={(e) => setInputToken(e.target.value)}
-            className="flex-1"
-          />
-          <Button type="submit" disabled={!inputToken}>
-            Load Map
-          </Button>
-        </form>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative w-full h-[500px] rounded-xl overflow-hidden border border-border shadow-lg">
-      <div ref={mapContainer} className="absolute inset-0" />
-      <div className="absolute bottom-4 left-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 text-xs text-muted-foreground">
-        Click on a mountain pin to view details
+    <div className="relative w-full h-[500px] rounded-xl overflow-hidden border border-border shadow-lg bg-gradient-to-b from-sky-100 to-sky-200 dark:from-slate-800 dark:to-slate-900">
+      {/* Simple USA/Canada outline using SVG */}
+      <svg
+        viewBox="0 0 1000 600"
+        className="absolute inset-0 w-full h-full"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        {/* Ocean background */}
+        <rect width="1000" height="600" fill="currentColor" className="text-sky-200 dark:text-slate-800" />
+        
+        {/* Simplified North America landmass */}
+        <path
+          d="M 50 50 
+             L 200 30 L 350 20 L 500 15 L 650 25 L 750 60 L 800 100
+             L 850 80 L 900 120 L 950 180 L 920 250 L 880 300
+             L 850 280 L 820 320 L 780 350 L 750 380 L 720 400
+             L 680 420 L 640 450 L 600 470 L 550 480 L 500 490
+             L 450 485 L 400 470 L 350 450 L 300 420 L 250 400
+             L 200 380 L 150 350 L 100 300 L 80 250 L 60 200
+             L 50 150 L 45 100 Z"
+          className="fill-emerald-100 dark:fill-slate-700 stroke-emerald-300 dark:stroke-slate-600"
+          strokeWidth="2"
+        />
+        
+        {/* USA-Canada border (approximate) */}
+        <path
+          d="M 80 220 L 200 210 L 350 200 L 500 195 L 650 205 L 800 230"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          strokeDasharray="5,5"
+          className="text-slate-400 dark:text-slate-500"
+        />
+        
+        {/* Great Lakes (simplified) */}
+        <ellipse cx="620" cy="210" rx="30" ry="20" fill="currentColor" className="text-sky-300 dark:text-slate-600" />
+        <ellipse cx="580" cy="230" rx="25" ry="15" fill="currentColor" className="text-sky-300 dark:text-slate-600" />
+        <ellipse cx="650" cy="240" rx="20" ry="12" fill="currentColor" className="text-sky-300 dark:text-slate-600" />
+      </svg>
+
+      {/* Mountain markers */}
+      {mountains.map((mountain) => {
+        if (!mountain.coordinates) return null;
+        const pos = getPosition(mountain.coordinates.lat, mountain.coordinates.lng);
+        
+        return (
+          <div
+            key={mountain.id}
+            className="absolute transform -translate-x-1/2 -translate-y-full cursor-pointer group z-10"
+            style={{ left: pos.x, top: pos.y }}
+            onClick={() => navigate(`/mountains/${mountain.id}`)}
+          >
+            {/* Tooltip */}
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              <div className="bg-card text-card-foreground px-3 py-1.5 rounded-lg text-xs font-medium shadow-lg whitespace-nowrap border border-border">
+                {mountain.name}
+                <div className="text-muted-foreground text-[10px]">{mountain.location}</div>
+              </div>
+              <div className="w-2 h-2 bg-card border-r border-b border-border rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
+            </div>
+            
+            {/* Pin */}
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg border-2 border-background transform transition-transform group-hover:scale-125 group-hover:-translate-y-1">
+              <Mountain className="w-4 h-4 text-primary-foreground" />
+            </div>
+            
+            {/* Pin shadow */}
+            <div className="w-2 h-1 bg-black/20 rounded-full mx-auto mt-1 group-hover:w-3 transition-all"></div>
+          </div>
+        );
+      })}
+
+      {/* Legend */}
+      <div className="absolute bottom-4 left-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 text-xs text-muted-foreground border border-border">
+        <div className="flex items-center gap-2">
+          <Mountain className="w-4 h-4 text-primary" />
+          <span>Click a pin to view mountain details</span>
+        </div>
       </div>
+
+      {/* Region labels */}
+      <div className="absolute top-8 left-1/4 text-sm font-medium text-muted-foreground/50">CANADA</div>
+      <div className="absolute top-1/2 left-1/3 text-sm font-medium text-muted-foreground/50">USA</div>
     </div>
   );
 };
