@@ -62,7 +62,7 @@ const Index = () => {
                 <div className="text-2xl md:text-3xl font-bold text-foreground">150+</div>
                 <div className="text-sm text-muted-foreground">Mountains</div>
               </div>
-              <div className="text-center border-x border-border">
+              <div className="text-center border-x border-border rounded-none">
                 <div className="text-2xl md:text-3xl font-bold text-foreground">12K+</div>
                 <div className="text-sm text-muted-foreground">Reports</div>
               </div>
