@@ -216,7 +216,7 @@ const Index = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 SnowPulse. Track conditions. Find powder.
+              © 2025 SnowZone. Track conditions. Find powder.
             </p>
           </div>
         </div>
