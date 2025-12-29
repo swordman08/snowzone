@@ -212,7 +212,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <Mountain className="h-5 w-5 text-primary" />
               <span className="font-display font-bold text-foreground">
-                Snow<span className="text-primary">Pulse</span>
+                Snow<span className="text-primary">Zone</span>
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
