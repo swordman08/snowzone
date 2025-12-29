@@ -18,23 +18,23 @@ const Index = () => {
         <div className="absolute inset-0 bg-[var(--gradient-hero)] opacity-90" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         
-        <div className="container relative z-10 mx-auto px-4 text-primary">
+        <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 backdrop-blur-sm text-primary-foreground px-4 py-2 rounded-full mb-6 animate-fade-in bg-accent">
+            <div className="inline-flex items-center gap-2 backdrop-blur-sm bg-snow-white/20 text-snow-white px-4 py-2 rounded-full mb-6 animate-fade-in">
               <Snowflake className="h-4 w-4" />
               <span className="text-sm font-medium">Real-time snow conditions</span>
             </div>
 
             <h1 style={{
             animationDelay: '100ms'
-          }} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in text-accent">
+          }} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in text-snow-white">
               Track Snow Conditions
               <span className="block text-ice-cyan">Like Never Before</span>
             </h1>
 
             <p style={{
             animationDelay: '200ms'
-          }} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in text-accent">
+          }} className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in text-snow-light">
               Join thousands of skiers and snowboarders sharing real-time snow reports from mountains worldwide. Find the perfect powder day.
             </p>
 
@@ -58,17 +58,17 @@ const Index = () => {
             <div className="grid grid-cols-3 gap-4 mt-12 max-w-lg mx-auto animate-fade-in" style={{
             animationDelay: '400ms'
           }}>
-              <div className="text-center text-slate-950">
-                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">150+</div>
-                <div className="text-sm text-primary-foreground/70">Mountains</div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-snow-white">150+</div>
+                <div className="text-sm text-snow-light/70">Mountains</div>
               </div>
-              <div className="text-center border-x border-primary-foreground/20">
-                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">12K+</div>
-                <div className="text-sm text-primary-foreground/70">Reports</div>
+              <div className="text-center border-x border-snow-white/20">
+                <div className="text-2xl md:text-3xl font-bold text-snow-white">12K+</div>
+                <div className="text-sm text-snow-light/70">Reports</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">5K+</div>
-                <div className="text-sm text-primary-foreground/70">Users</div>
+                <div className="text-2xl md:text-3xl font-bold text-snow-white">150+</div>
+                <div className="text-sm text-snow-light/70">Users</div>
               </div>
             </div>
           </div>
