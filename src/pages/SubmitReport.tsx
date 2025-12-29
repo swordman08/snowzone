@@ -253,7 +253,15 @@ const SubmitReport = () => {
               <label className="text-sm font-medium text-foreground mb-3 block">
                 Photos (Optional)
               </label>
-              <PhotoUpload photos={photos} onPhotosChange={setPhotos} maxPhotos={5} />
+              {user ? (
+                <PhotoUpload photos={photos} onPhotosChange={setPhotos} maxPhotos={5} />
+              ) : (
+                <div className="border-2 border-dashed border-border/50 rounded-xl p-6 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Please <a href="/auth" className="text-primary underline hover:no-underline">sign in</a> to upload photos with your report.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Comment */}
