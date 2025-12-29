@@ -42,6 +42,17 @@ const SubmitReport = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Authentication required for report submission
+    if (!user) {
+      toast({
+        title: 'Sign In Required',
+        description: 'Please sign in to submit a snow report.',
+        variant: 'destructive',
+      });
+      navigate('/auth');
+      return;
+    }
+
     if (!selectedMountain) {
       toast({
         title: 'Mountain Required',
@@ -77,7 +88,7 @@ const SubmitReport = () => {
           wind_conditions: windConditions,
           comment: comment,
           reporter_name: reporterName || null,
-          user_id: user?.id || null,
+          user_id: user.id,
         })
         .select()
         .single();
